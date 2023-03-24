@@ -1,3 +1,6 @@
-def test_flask_health_check(client):
-    r = client.get('/flask-health-check')
+import requests
+
+
+def test_flask_health_check():
+    r = requests.get('http://localhost:80/flask-health-check')
     assert r.status_code == 200

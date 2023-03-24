@@ -1,12 +1,27 @@
 import pytest
+import requests
+import time
 
 valid_get_requests = [
     {},
     {'from_time': 100},
-    {'from_time': 100.223}
+    {'from_time': time.time()}
 ]
 
+invalid_get_requests = [
+    {'time_from': 100},
+    {'from_time': -12},
+    {'from_time': '12:30'}
+]
+
+
 @pytest.mark.parametrize("get_data", valid_get_requests)
-def test_valid_request(client, get_data: dict):
-    r = client.get('/get-data', json=get_data)
+def test_valid_request(get_data: dict):
+    r = requests.get('http://localhost:80/get-data', json=get_data)
     assert r.status_code == 200
+
+
+@pytest.mark.parametrize("get_data", invalid_get_requests)
+def test_invalid_request(get_data: dict):
+    r = requests.get('http://localhost:80/get-data', json=get_data)
+    assert r.status_code == 400
