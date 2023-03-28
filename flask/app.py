@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from marshmallow import Schema, fields, validate, ValidationError
 from pymongo import MongoClient, DESCENDING
+import time
 
 
 def create_app():
@@ -9,7 +10,7 @@ def create_app():
     mongoclient = MongoClient("mongo:27017")
     db = mongoclient['main-database']
     posts = db['posts']
-    posts.create_index([('time', DESCENDING)])
+    posts.create_index([('db_time', DESCENDING)])
 
     @app.route('/')
     def hello():
@@ -61,7 +62,7 @@ def create_app():
         """
         schema for post requests to the endpoint
         """
-        from_time = fields.Int(validate=validate.Range(0), required=False)
+        min_time = fields.Int(validate=validate.Range(0), required=False)
 
     @app.route('/post-data', methods=['GET', 'POST'])
     def post_data():
@@ -71,7 +72,7 @@ def create_app():
         except ValidationError as err:
             return jsonify(err.messages), 400
 
-        posts.insert_one(request_data)
+        posts.insert_one({'db_time': time.time(), **request_data})
 
         return "success'", 200
 
@@ -80,15 +81,15 @@ def create_app():
         # validate get request
         request_data = request.get_json(silent=True)
         if request_data is None:
-            from_time = 0
+            min_time = 0
         else:
             try:
                 request_data = GetSchema().load(request_data)
-                from_time = request_data.get('from_time', 0)
+                min_time = request_data.get('min_time', 0)
             except ValidationError as err:
                 return jsonify(err.messages), 400
 
-        data = list(posts.find({"time": {"$gte": from_time}}))
+        data = list(posts.find({"db_time": {"$gte": min_time}}))
 
         #  remove mongodb ids - these are not serialisable
         for d in data:

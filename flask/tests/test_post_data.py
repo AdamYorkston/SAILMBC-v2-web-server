@@ -18,7 +18,7 @@ valid_post_requests = [
     {'device_id': '12331',
      'latitude': 90.0,
      'longitude': -180,
-     'time': 1233301232132000,
+     'time': 123000,
      'speed': 0.0023,
      'speed_accuracy': None,
      'user_id': 'Adamy',

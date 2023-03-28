@@ -4,14 +4,14 @@ import time
 
 valid_get_requests = [
     {},
-    {'from_time': 100},
-    {'from_time': time.time()}
+    {'min_time': 100},
+    {'min_time': time.time()}
 ]
 
 invalid_get_requests = [
     {'time_from': 100},
-    {'from_time': -12},
-    {'from_time': '12:30'}
+    {'min_time': -12},
+    {'min_time': '12:30'}
 ]
 
 
