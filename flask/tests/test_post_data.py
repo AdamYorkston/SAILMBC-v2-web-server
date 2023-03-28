@@ -4,33 +4,37 @@ from typing import Any
 
 
 valid_post_requests = [
-    {'user_id': 'adamy',
+    {'device_id': 'adamy',
      'latitude': -10.123,
      'longitude': 23.12,
      'time': 123300003},
-    {'user_id': 'HelloThere',
+    {'device_id': 'HelloThere',
      'latitude': -90,
      'longitude': 180.0,
      'time': 33.22,
      'accuracy': 10,
      'speed': 3.4,
      'speed_accuracy': 9992.3123},
-    {'user_id': '12331',
+    {'device_id': '12331',
      'latitude': 90.0,
      'longitude': -180,
      'time': 1233301232132000,
      'speed': 0.0023,
-     'speed_accuracy': None},
-    {'user_id': '@]2[}]',
+     'speed_accuracy': None,
+     'user_id': 'Adamy',
+     'boat_class': 'Laser'},
+    {'device_id': '@]2[}]',
      'latitude': 10.333123,
      'longitude': 112.1,
      'time': 1233.33232,
-     'accuracy': None}
+     'accuracy': None,
+     'user_id': None,
+     'boat_class': None}
 ]
 
 
 invalid_post_requests = [
-    {'user_id': 'adamy', 'latitude': -10.123, 'longitude': 111.222},
+    {'device_id': 'adamy', 'latitude': -10.123, 'longitude': 111.222},
     {'latitude': -10.123, 'longitude': 111.22, 'time': 23.11},
     {'latitude': None, 'longitude': None, 'time': None}
 ]

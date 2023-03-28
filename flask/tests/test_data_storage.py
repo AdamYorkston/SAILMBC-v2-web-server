@@ -5,28 +5,32 @@ from typing import Any
 request_time = 1679691986
 
 post_requests = [
-    {'user_id': 'adamy',
+    {'device_id': 'adamy',
      'latitude': -10.123,
      'longitude': 23.12,
      'time': request_time},
-    {'user_id': 'HelloThere',
+    {'device_id': 'HelloThere',
      'latitude': -90,
      'longitude': 180.0,
      'time': request_time,
      'accuracy': 10,
      'speed': 3.4,
      'speed_accuracy': 9992.3123},
-    {'user_id': '12331',
+    {'device_id': '12331',
      'latitude': 90.0,
      'longitude': -180,
      'time': request_time,
      'speed': 0.0023,
-     'speed_accuracy': None},
-    {'user_id': '@]2[}]',
+     'speed_accuracy': None,
+     'user_id': 'Adamy',
+     'boat_class': 'Laser'},
+    {'device_id': '@]2[}]',
      'latitude': 10.333123,
      'longitude': 112.1,
      'time': request_time,
-     'accuracy': None}
+     'accuracy': None,
+     'user_id': None,
+     'boat_class': None}
 ]
 
 

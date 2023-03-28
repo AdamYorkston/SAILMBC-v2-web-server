@@ -40,8 +40,8 @@ def create_app(local=False):
         """
         schema for post requests to the endpoint
         """
-        user_id = fields.Str(required=True,
-                             validate=validate.Length(5))
+        device_id = fields.Str(required=True,
+                               validate=validate.Length(5))
         latitude = fields.Float(required=True,
                                 validate=validate.Range(-90.0, 90.0))
         longitude = fields.Float(required=True,
@@ -54,6 +54,8 @@ def create_app(local=False):
                              validate=validate.Range(0.0))
         speed_accuracy = fields.Float(allow_nan=True, allow_none=True,
                                       validate=validate.Range(0.0))
+        user_id = fields.Str(allow_nan=True, allow_none=True)
+        boat_class = fields.Str(allow_nan=True, allow_none=True)
 
     class GetSchema(Schema):
         """
