@@ -7,7 +7,7 @@ services:
     environment: 
       - FLASK_SERVER_ADDR=flask-app:8000
     ports:
-      - "80:80"
+      - "80:80" # only nginx will be exposed to the outside world (via port 80)
     depends_on:
       - flask-app
     healthcheck:
@@ -22,14 +22,13 @@ services:
     depends_on:
       - mongo
     restart: always
-    ports: 
-      - '8000:8000'
     healthcheck:
       test: ["CMD-SHELL", "curl --silent --fail localhost:8000/flask-health-check || exit 1"]
       interval: 10s
       timeout: 10s
       retries: 3
-    command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 'app:create_app()'
+    command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 'app:create_app()' # server is run on port 8000 INTERNALLY, but this isn't exposed outside of docker network
 
   mongo:
     image: mongo
+    restart: always

@@ -3,13 +3,10 @@ from marshmallow import Schema, fields, validate, ValidationError
 from pymongo import MongoClient
 
 
-def create_app(local=False):
+def create_app():
     app = Flask(__name__)
 
-    if local:  # use local mongodb - loaded in command line using mongod
-        mongoclient = MongoClient()
-    else:  # use mongodb from docker
-        mongoclient = MongoClient("mongo:27017")
+    mongoclient = MongoClient("mongo:27017")
 
     @app.route('/')
     def hello():
