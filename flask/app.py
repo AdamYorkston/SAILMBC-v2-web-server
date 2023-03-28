@@ -1,12 +1,15 @@
 from flask import Flask, request, jsonify
 from marshmallow import Schema, fields, validate, ValidationError
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 
 
 def create_app():
     app = Flask(__name__)
 
     mongoclient = MongoClient("mongo:27017")
+    db = mongoclient['main-database']
+    posts = db['posts']
+    posts.create_index([('time', DESCENDING)])
 
     @app.route('/')
     def hello():
@@ -68,8 +71,6 @@ def create_app():
         except ValidationError as err:
             return jsonify(err.messages), 400
 
-        db = mongoclient['main-database']
-        posts = db.posts
         posts.insert_one(request_data)
 
         return "success'", 200
@@ -87,9 +88,7 @@ def create_app():
             except ValidationError as err:
                 return jsonify(err.messages), 400
 
-        db = mongoclient['main-database']
-        posts = db.posts
-        data = [post for post in posts.find({"time": {"$gte": from_time}})]
+        data = list(posts.find({"time": {"$gte": from_time}}))
 
         #  remove mongodb ids - these are not serialisable
         for d in data:
